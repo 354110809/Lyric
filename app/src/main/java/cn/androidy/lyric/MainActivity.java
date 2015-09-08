@@ -1,15 +1,13 @@
 package cn.androidy.lyric;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.io.IOException;
 
-import cn.androidy.lyric.data.LyricRow;
 import cn.androidy.lyric.view.LyricView;
 
 public class MainActivity extends AppCompatActivity {
@@ -22,16 +20,11 @@ public class MainActivity extends AppCompatActivity {
 
         mLyricView = (LyricView) findViewById(R.id.lyricView);
 
-        List<LyricRow> list = new ArrayList<>();
-        list.add(new LyricRow("风吹雨成花", 0, 1000,8000));
-        list.add(new LyricRow("时间追不上白马", 1000, 2000,8000));
-        list.add(new LyricRow("你年少掌心的梦话", 2000, 3000,8000));
-        list.add(new LyricRow("依然紧握着吗", 3000, 4000,8000));
-        list.add(new LyricRow("云翻涌成夏", 4000, 5000,8000));
-        list.add(new LyricRow("眼泪被岁月蒸发", 5000, 6000,8000));
-        list.add(new LyricRow("这条路上的你我她", 6000, 7000,8000));
-        list.add(new LyricRow("有谁迷路了吗", 7000, 8000,8000));
-        mLyricView.playLyric(list);
+        try {
+            mLyricView.playLyric(getResources().getAssets().open("demo.lrc"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void startPlay(View view) {

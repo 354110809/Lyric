@@ -11,14 +11,14 @@ public class LyricParams {
     private int canvasWidth;//画布整体宽度
     private int maxTextWidth;//允许的最大字的宽度
     private int textSize;
-    private float max;
+    private int max;
 
-    public void setMax(float max) {
-        this.max = max;
+    public int getMax() {
+        return max;
     }
 
-    public float getMax() {
-        return max;
+    public void setMax(int max) {
+        this.max = max;
     }
 
     public void setTextSize(int textSize) {

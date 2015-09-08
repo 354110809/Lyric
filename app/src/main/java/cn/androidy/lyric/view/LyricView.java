@@ -11,12 +11,15 @@ import android.util.TypedValue;
 import android.view.View;
 import android.view.animation.LinearInterpolator;
 
+import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.List;
 
 import cn.androidy.lyric.R;
 import cn.androidy.lyric.data.LyricManager;
 import cn.androidy.lyric.data.LyricRow;
 import cn.androidy.lyric.data.LyricParams;
+import cn.androidy.lyric.data.LyricUtil;
 
 /**
  * Created by Rick Meng on 2015/6/18.
@@ -75,16 +78,37 @@ public class LyricView extends View implements ValueAnimator.AnimatorUpdateListe
             animator.cancel();
             isPlaying = false;
         } else {
-            animator = ValueAnimator.ofFloat(mProgress, 1).setDuration((long) (10 * 1000 * (1 - mProgress)));
-            animator.setInterpolator(new LinearInterpolator());
-            animator.addUpdateListener(this);
-            animator.addListener(this);
-            animator.start();
+            if (mLyricManager.getLyricList() != null && !mLyricManager.getLyricList().isEmpty()) {
+                animator = ValueAnimator.ofFloat(mProgress, 1).setDuration((long) (mLyricManager.getLyricList().get(0).getLyricRow().getMax() * (1 - mProgress)));
+                animator.setInterpolator(new LinearInterpolator());
+                animator.addUpdateListener(this);
+                animator.addListener(this);
+                animator.start();
+            }
         }
     }
 
     public void playLyric(List<LyricRow> list) {
         mLyricManager.playLyric(list);
+    }
+
+    public void playLyric(InputStream inputStream) {
+        List<LyricRow> list = new ArrayList<>();
+        try {
+            LyricUtil lyricUtil = new LyricUtil(inputStream);
+            List<LyricUtil.Statement> statementList = lyricUtil.getLrcList();
+            for (int i = 0, count = statementList.size(); i < count; i++) {
+                if (i < count - 1) {
+                    LyricUtil.Statement current = statementList.get(i);
+                    LyricUtil.Statement next = statementList.get(i + 1);
+                    LyricRow lyricRow = new LyricRow(current.getLyric(), current.getTimeMillis(), next.getTimeMillis(), statementList.get(count - 1).getTimeMillis());
+                    list.add(lyricRow);
+                }
+            }
+            playLyric(list);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -95,7 +119,6 @@ public class LyricView extends View implements ValueAnimator.AnimatorUpdateListe
         params.setCanvasHight(getMeasuredHeight());
         params.setCanvasWidth(getMeasuredWidth());
         params.setMaxTextWidth(mMaxTextWidth);
-        params.setMax(8000);
         mLyricManager.updateLyricInfo();
     }
 

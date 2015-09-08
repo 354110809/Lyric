@@ -20,6 +20,11 @@ public class LyricManager {
     private float stepHeight;
     private Paint paint;
     private Rect mTextBound = new Rect();
+
+    public List<LyricDrawInfo> getLyricList() {
+        return mLyricList;
+    }
+
     public LyricManager(LyricParams params) {
         this.params = params;
         paint = new Paint();

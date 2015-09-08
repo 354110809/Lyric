@@ -43,9 +43,9 @@ public class LyricDrawInfo {
      * @return 如果是正在渲染的歌词，返回true。
      */
     public boolean onDraw(Canvas canvas, Paint paint, float progress) {
-        float start = getLyricRow().getStart() / settings.getMax();
-        float length = getLyricRow().getLyricRowLength() / settings.getMax();
-        float divProgress = 0;
+        double start = getLyricRow().getStart() / mLyricRow.getMax();
+        double length = getLyricRow().getLyricRowLength() / mLyricRow.getMax();
+        double divProgress = 0;
         if (progress > start + length) {
             divProgress = 1.0f;
         } else if (progress < start) {

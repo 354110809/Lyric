@@ -5,26 +5,30 @@ package cn.androidy.lyric.data;
  */
 public class LyricRow {
     String text;
-    public float start;
-    public float end;
-    private float totalLength;
+    public double start;
+    public double end;
+    private double max;
 
-    public LyricRow(String text, float start, float end, float totalLength) {
+    public LyricRow(String text, double start, double end, double max) {
         this.text = text;
         this.start = start;
         this.end = end;
-        this.totalLength = totalLength;
+        this.max = max;
+    }
+
+    public double getMax() {
+        return max;
     }
 
     public String getText() {
         return text;
     }
 
-    public float getStart() {
+    public double getStart() {
         return start;
     }
 
-    public float getLyricRowLength() {
+    public double getLyricRowLength() {
         return end - start;
     }
 }
