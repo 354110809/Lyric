@@ -12,6 +12,15 @@ public class LyricParams {
     private int maxTextWidth;//允许的最大字的宽度
     private int textSize;
     private int max;
+    private double textSpeed;//文字渲染的速度，宽度/秒，这里假定每个词的播放速度是匀速的。
+
+    public double getTextSpeed() {
+        return textSpeed;
+    }
+
+    public void setTextSpeed(double textSpeed) {
+        this.textSpeed = textSpeed;
+    }
 
     public int getMax() {
         return max;

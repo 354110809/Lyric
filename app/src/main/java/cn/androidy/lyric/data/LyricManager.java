@@ -38,7 +38,20 @@ public class LyricManager {
                 mLyricList.add(new LyricDrawInfo(row, params));
             }
             mTextBound = measureText(mLyricList.get(0).getLyricRow().getText(), paint);
+            setTextPlaySpeed();
         }
+    }
+
+    private void setTextPlaySpeed() {
+        double result = 0;
+        for (LyricDrawInfo lyricDrawInfo : mLyricList) {
+            double w = paint.measureText(lyricDrawInfo.getLyricRow().getText());
+            double speed = w / lyricDrawInfo.getLyricRow().getLyricRowLength();
+            if (speed > result) {
+                result = speed;
+            }
+        }
+        params.setTextSpeed(result);
     }
 
     public void updateLyricInfo() {
