@@ -126,7 +126,6 @@ public class LyricView extends View implements ValueAnimator.AnimatorUpdateListe
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         mLyricManager.dispatchDraw(canvas, mPaint, mProgress);
-        canvas.save(Canvas.CLIP_SAVE_FLAG);
     }
 
     private int sp2px(float dpVal) {
